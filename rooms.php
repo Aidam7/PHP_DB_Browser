@@ -20,6 +20,7 @@ echo "Počet řádků: " . $stmt->rowCount() . "<br>";
 if ($stmt->rowCount() == 0) {
     echo "Záznam neobsahuje žádná data";
 } else {
+    echo('<a href="index.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</a>');
     echo "<table class='table table-striped'>";
     echo "<tr>";
     echo "<th>Name</th><th>No.</th><th>Phone</th><th>ID</th>";
