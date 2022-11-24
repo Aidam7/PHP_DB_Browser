@@ -10,11 +10,13 @@
 </head>
 <body class="container">
 <?php
-$host = DBHost;
-$db = DB;
+require_once "inc/db.inc.php";
+require_once "DBCredentials.php";
+$host = '127.0.0.1';
+$db = 'ip_3';
 $user = DBUsername;
 $pass = DBPassword;
-$charset = DBCharset;
+$charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
