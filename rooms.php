@@ -6,7 +6,7 @@
     <!-- Bootstrap-->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <title>Připojení k DB</title>
+    <title>Seznam místností</title>
 </head>
 <body class="container">
 <?php
@@ -22,11 +22,11 @@ if ($stmt->rowCount() == 0) {
 } else {
     echo "<table class='table table-striped'>";
     echo "<tr>";
-    echo "<th>Name</th><th>No.</th><th>Phone</th>";
+    echo "<th>Name</th><th>No.</th><th>Phone</th><th>ID</th>";
     echo "</tr>";
     while ($row = $stmt->fetch()) {
         echo "<tr>";
-        echo "<td><a href='room.php?roomId={$row->room_id}'>{$row->name}</a></td><td>{$row->no}</td><td>{$row->phone}</td>";
+        echo "<td><a href='room.php?roomId={$row->room_id}'>{$row->name}</a></td><td>{$row->no}</td><td>{$row->phone}</td><td>{$row->room_id}</td>";
         echo "</tr>";
     //foreach ($stmt as $row) {
 //        var_dump($row);
