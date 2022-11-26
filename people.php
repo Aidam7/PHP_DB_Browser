@@ -13,7 +13,7 @@
 
 require_once "inc/db.inc.php";
 
-$stmt = $pdo->query('SELECT * FROM employee');
+$stmt = $pdo->query('SELECT e.*, r.name AS roomName, r.phone AS roomPhone FROM employee e LEFT JOIN room r ON e.room = r.room_id');
 
 echo "Počet řádků: " . $stmt->rowCount() . "<br>";
 
@@ -28,7 +28,7 @@ if ($stmt->rowCount() == 0) {
     while ($row = $stmt->fetch()) {
         echo "<tr>";
         $capitalizedJob = mb_convert_case($row -> job, MB_CASE_TITLE, 'UTF-8');
-        echo "<td><a href='person.php?employeeId={$row->employee_id}'>{$row->name} {$row -> surname}</a></td><td>$capitalizedJob</td><td>{$row->room}</td><td>{$row->room}</td>";
+        echo "<td><a href='person.php?employeeId={$row->employee_id}'>{$row->name} {$row -> surname}</a></td><td>$capitalizedJob</td><td>{$row->roomName}</td><td>{$row->roomPhone}</td>";
         echo "</tr>";
         //foreach ($stmt as $row) {
 //        var_dump($row);
