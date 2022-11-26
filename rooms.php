@@ -23,11 +23,11 @@ if ($stmt->rowCount() == 0) {
     echo('<a href="index.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</a>');
     echo "<table class='table table-striped'>";
     echo "<tr>";
-    echo "<th>Name</th><th>No.</th><th>Phone</th><th>ID</th>";
+    echo "<th>Název</th><th>Číslo</th><th>Pevná linka</th>";
     echo "</tr>";
     while ($row = $stmt->fetch()) {
         echo "<tr>";
-        echo "<td><a href='room.php?roomId={$row->room_id}'>{$row->name}</a></td><td>{$row->no}</td><td>{$row->phone}</td><td>{$row->room_id}</td>";
+        echo "<td><a href='room.php?roomId={$row->room_id}'>{$row->name}</a></td><td>{$row->no}</td><td>{$row->phone}</td>";
         echo "</tr>";
     //foreach ($stmt as $row) {
 //        var_dump($row);
