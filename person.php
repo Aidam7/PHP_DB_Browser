@@ -20,6 +20,9 @@ if ($id === null || $id === false) {
         $status = "not_found";
     } else {
         $person = $stmt->fetch();
+        $stmt = $pdo->prepare("SELECT room.name FROM room INNER JOIN employee ON room.room_id = employee.room WHERE employee.employee_id =:employeeID");
+        $stmt->execute(['employeeID' => $id]);
+        $room = $stmt->fetch();
         $status = "OK";
     }
 }
@@ -35,7 +38,7 @@ if ($id === null || $id === false) {
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
     <title><?php
         if($status == "OK"){
-            echo("Zaměstnanec č. {$person -> employee_id}");
+            echo("{$person -> name} {$person -> surname}");
         }
         else{
             $httpCode = http_response_code();
@@ -53,15 +56,15 @@ switch ($status) {
         echo "<h1>Error 404: Not found</h1>";
         break;
     default:
-        /*
+
         echo("<div class='container'>");
-        echo("<h1>Místnost č. {$room -> no}</h1>");
-        echo('<a href="rooms.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam místností</a>');
+        echo("<h1>Zaměstnanec č. {$person -> employee_id}</h1>");
+        echo('<a href="people.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam zaměstnanců</a>');
         echo("<dl class='dl-horizontal'>");
-        echo("<dt>Číslo</dt><dd>{$room -> no}</dd><dt>Název</dt><dd>{$room -> name}</dd><dt>Telefon</dt><dd>{$room -> phone}</dd>");
+        echo("<dt>Číslo</dt><dd>{$person -> employee_id}</dd><dt>Jméno</dt><dd>{$person -> name} {$person -> surname}</dd><dt>Plat</dt><dd>{$person -> wage}</dd><dt>Místnost</dt><dd>{$room -> name}</dd>");
         echo("</dl>");
         echo("</div>");
-        */
+
         break;
 }
 ?>
