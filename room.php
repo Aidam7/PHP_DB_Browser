@@ -58,6 +58,13 @@ switch ($status) {
         echo('<a href="rooms.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam místností</a>');
         echo("<dl class='dl-horizontal'>");
         echo("<dt>Číslo</dt><dd>{$room -> no}</dd><dt>Název</dt><dd>{$room -> name}</dd><dt>Telefon</dt><dd>{$room -> phone}</dd>");
+        $stmt = $pdo->prepare("SELECT employee.name, employee.surname, employee.wage FROM employee INNER JOIN room ON employee.room =:roomId; ");
+        $stmt->execute(['roomId' => $id]);
+        $workers = $stmt->fetch();
+        $stmt = $pdo->prepare("SELECT employee.name, employee.surname FROM employee INNER JOIN `key` k ON k.room =:roomId; ");
+        $stmt->execute(['roomId' => $id]);
+        $keys = $stmt ->fetch();
+        var_dump($keys);
         echo("</dl>");
         echo("</div>");
         break;
