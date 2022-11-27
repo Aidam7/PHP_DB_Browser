@@ -4,8 +4,7 @@ $id = filter_input(INPUT_GET,
     FILTER_VALIDATE_INT,
     ["options" => ["min_range"=> 1]]
 );
-
-
+$POMOC = $id;
 if ($id === null || $id === false) {
     http_response_code(400);
     $status = "bad_request";
@@ -20,8 +19,8 @@ if ($id === null || $id === false) {
         $status = "not_found";
     } else {
         $person = $stmt->fetch();
-        $stmt = $pdo->prepare("SELECT room.name FROM room INNER JOIN employee ON room.room_id = employee.room WHERE employee.employee_id =:employeeID");
-        $stmt->execute(['employeeID' => $id]);
+        $stmt = $pdo->prepare("SELECT room.name, room.room_id FROM room INNER JOIN employee ON room.room_id = employee.room WHERE employee.employee_id =:employeeId");
+        $stmt->execute(['employeeId' => $id]);
         $room = $stmt->fetch();
         $status = "OK";
     }
@@ -56,12 +55,26 @@ switch ($status) {
         echo "<h1>Error 404: Not found</h1>";
         break;
     default:
-
         echo("<div class='container'>");
         echo("<h1>Zaměstnanec č. {$person -> employee_id}</h1>");
         echo('<a href="people.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam zaměstnanců</a>');
         echo("<dl class='dl-horizontal'>");
-        echo("<dt>Číslo</dt><dd>{$person -> employee_id}</dd><dt>Jméno</dt><dd>{$person -> name} {$person -> surname}</dd><dt>Plat</dt><dd>{$person -> wage}</dd><dt>Místnost</dt><dd>{$room -> name}</dd>");
+
+        $capitalizedJob = mb_convert_case($person -> job, MB_CASE_TITLE, 'UTF-8');
+        echo("<dt>Číslo</dt><dd>{$person -> employee_id}</dd><dt>Jméno</dt><dd>{$person -> name} {$person -> surname}</dd><dt>Pozice</dt><dd>{$capitalizedJob}</dd><dt>Plat</dt><dd>{$person -> wage}</dd><dt>Místnost</dt><dd><a href='room.php?roomId={$room->room_id}'>{$room->name}</a></dd>");
+        unset($person);
+        $stmt = $pdo ->prepare("SELECT room.name, room.room_id FROM `key` klic JOIN room ON klic.room = room.room_id WHERE klic.employee =:employeeId");
+        $stmt->execute(['employeeId' => $id]);
+        if($stmt ->fetch() === 0){
+            echo("<dt>Klíče</dt><dd>—</dd>");
+        }
+        else{
+            echo("<dt>Klíče</dt>");
+            while($room = $stmt->fetch()){
+                echo("<dd>{$room -> name}</dd>");
+            }
+
+        }
         echo("</dl>");
         echo("</div>");
 
