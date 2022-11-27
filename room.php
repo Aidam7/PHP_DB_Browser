@@ -58,9 +58,24 @@ switch ($status) {
         echo('<a href="rooms.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam místností</a>');
         echo("<dl class='dl-horizontal'>");
         echo("<dt>Číslo</dt><dd>{$room -> no}</dd><dt>Název</dt><dd>{$room -> name}</dd><dt>Telefon</dt><dd>{$room -> phone}</dd>");
-        $stmt = $pdo->prepare("SELECT employee.name, employee.surname, employee.wage FROM employee INNER JOIN room ON employee.room =:roomId; ");
+        $stmt = $pdo->prepare("SELECT employee.name, employee.surname, employee.wage, employee.employee_id FROM employee INNER JOIN room ON room.room_id =:roomId AND room.room_id = employee.room ");
         $stmt->execute(['roomId' => $id]);
-        $workers = $stmt->fetch();
+        if($stmt -> rowCount() === 0){
+            echo("<dt>Zaměstnanci</dt><dd>—</dd><dt>Průměrná mzda</dt><dd>—</dd>");
+        }
+        else{
+            $employeeCount = $stmt->rowCount();
+            $wageSum = 0;
+            $averageWage = 0;
+            echo("<dt>Zaměstnanci</dt>");
+            while($row = $stmt->fetch()){
+                $firstLetterOfName = mb_substr($row -> name,0,1);
+                echo("<dd><a href='person.php?employeeId={$row->employee_id}'>{$row->surname} {$firstLetterOfName}.</a></dd>");
+                $wageSum += $row -> wage;
+            }
+            $averageWage = $wageSum / $employeeCount;
+            echo("<dt>Průměrná mzda</dt><dd>{$averageWage}</dd>");
+        }
         $stmt = $pdo->prepare("SELECT employee.name, employee.surname FROM employee INNER JOIN `key` k ON k.room =:roomId; ");
         $stmt->execute(['roomId' => $id]);
         $keys = $stmt ->fetch();
