@@ -15,11 +15,10 @@ require_once "inc/db.inc.php";
 
 $stmt = $pdo->query('SELECT * FROM room');
 
-echo "Počet řádků: " . $stmt->rowCount() . "<br>";
-
 if ($stmt->rowCount() == 0) {
     echo "Záznam neobsahuje žádná data";
 } else {
+    echo("<h1>Místnosti</h1>");
     echo('<a href="index.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</a>');
     echo "<table class='table table-striped'>";
     echo "<tr>";
