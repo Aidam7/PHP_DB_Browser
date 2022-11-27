@@ -76,10 +76,19 @@ switch ($status) {
             $averageWage = $wageSum / $employeeCount;
             echo("<dt>Průměrná mzda</dt><dd>{$averageWage}</dd>");
         }
-        $stmt = $pdo->prepare("SELECT employee.name, employee.surname FROM employee INNER JOIN `key` k ON k.room =:roomId; ");
+        $stmt = $pdo->prepare("SELECT employee.name, employee.surname, employee.employee_id FROM `key` klice JOIN employee ON klice.employee = employee.employee_id WHERE klice.room =:roomId ORDER BY employee.surname; ");
         $stmt->execute(['roomId' => $id]);
-        $keys = $stmt ->fetch();
-        var_dump($keys);
+        if($stmt -> rowCount() === 0){
+            echo("<dt>Klíče</dt><dd>—</dd>");
+        }
+        else{
+            echo("<dt>Klíče</dt>");
+            while($row = $stmt->fetch()){
+                $firstLetterOfName = mb_substr($row -> name,0,1);
+                echo("<dd><a href='person.php?employeeId={$row->employee_id}'>{$row->surname} {$firstLetterOfName}.</a></dd>");
+            }
+        }
+
         echo("</dl>");
         echo("</div>");
         break;
