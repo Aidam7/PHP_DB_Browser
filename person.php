@@ -61,8 +61,8 @@ switch ($status) {
         echo("<dl class='dl-horizontal'>");
 
         $capitalizedJob = mb_convert_case($person -> job, MB_CASE_TITLE, 'UTF-8');
-        echo("<dt>Číslo</dt><dd>{$person -> employee_id}</dd><dt>Jméno</dt><dd>{$person -> name} {$person -> surname}</dd><dt>Pozice</dt><dd>{$capitalizedJob}</dd><dt>Plat</dt><dd>{$person -> wage}</dd><dt>Místnost</dt><dd><a href='room.php?roomId={$room->room_id}'>{$room->name}</a></dd>");
-        unset($person);
+        $formattedWage = number_format($person -> wage,2);
+        echo("<dt>Číslo</dt><dd>{$person -> employee_id}</dd><dt>Jméno</dt><dd>{$person -> name} {$person -> surname}</dd><dt>Pozice</dt><dd>{$capitalizedJob}</dd><dt>Plat</dt><dd>{$formattedWage}</dd><dt>Místnost</dt><dd><a href='room.php?roomId={$room->room_id}'>{$room->name}</a></dd>");
         $stmt = $pdo ->prepare("SELECT room.name, room.room_id FROM `key` klic JOIN room ON klic.room = room.room_id WHERE klic.employee =:employeeId ORDER BY room.name");
         $stmt->execute(['employeeId' => $id]);
         if($stmt ->fetch() === 0){

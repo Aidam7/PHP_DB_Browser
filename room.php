@@ -57,7 +57,13 @@ switch ($status) {
         echo("<h1>Místnost č. {$room -> no}</h1>");
         echo('<a href="rooms.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam místností</a>');
         echo("<dl class='dl-horizontal'>");
-        echo("<dt>Číslo</dt><dd>{$room -> no}</dd><dt>Název</dt><dd>{$room -> name}</dd><dt>Telefon</dt><dd>{$room -> phone}</dd>");
+        echo("<dt>Číslo</dt><dd>{$room -> no}</dd><dt>Název</dt><dd>{$room -> name}</dd>");
+        if($room -> phone === null){
+        echo("<dt>Telefon</dt><dd>—</dd>");
+        }
+        else{
+            echo("<dt>Telefon</dt><dd>{$room -> phone}</dd>");
+        }
         $stmt = $pdo->prepare("SELECT employee.name, employee.surname, employee.wage, employee.employee_id FROM employee INNER JOIN room ON room.room_id =:roomId AND room.room_id = employee.room ");
         $stmt->execute(['roomId' => $id]);
         if($stmt -> rowCount() === 0){
@@ -74,6 +80,7 @@ switch ($status) {
                 $wageSum += $row -> wage;
             }
             $averageWage = $wageSum / $employeeCount;
+            $averageWage = number_format($averageWage,2);
             echo("<dt>Průměrná mzda</dt><dd>{$averageWage}</dd>");
         }
         $stmt = $pdo->prepare("SELECT employee.name, employee.surname, employee.employee_id FROM `key` klice JOIN employee ON klice.employee = employee.employee_id WHERE klice.room =:roomId ORDER BY employee.surname; ");
