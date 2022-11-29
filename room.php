@@ -95,7 +95,6 @@ switch ($status) {
                 echo("<dd><a href='person.php?employeeId={$row->employee_id}'>{$row->surname} {$firstLetterOfName}.</a></dd>");
             }
         }
-
         echo("</dl>");
         echo("</div>");
         break;

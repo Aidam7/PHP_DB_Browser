@@ -1,3 +1,25 @@
+<?php
+$order = filter_input(INPUT_GET,
+    'poradi',FILTER_DEFAULT,
+    ["options" => "prijmeni_up","prijmeni_down","mistnost_up","mistnost_down","telefon_up","telefon_down","pozice_up","pozice_down"]
+);
+require_once "inc/db.inc.php";
+
+
+$stmtString = 'SELECT e.*, r.name AS roomName, r.phone AS roomPhone FROM employee e  JOIN room r ON e.room = r.room_id';
+switch ($order){
+    case "prijmeni_up": $stmtString .= " ORDER BY e.surname"; break;
+    case "prijmeni_down": $stmtString .= " ORDER BY e.surname DESC"; break;
+    case "mistnost_up": $stmtString .= " ORDER BY roomName"; break;
+    CASE "mistnost_down": $stmtString .= " ORDER BY roomName DESC"; break;
+    CASE "telefon_up": $stmtString .= " ORDER BY roomPhone"; break;
+    CASE "telefon_down": $stmtString .= " ORDER BY roomPhone DESC"; break;
+    CASE "pozice_up": $stmtString .= " ORDER BY e.job"; break;
+    CASE "pozice_down": $stmtString .= " ORDER BY e.job DESC"; break;
+}
+$stmt = $pdo->query($stmtString);
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -11,9 +33,7 @@
 <body class="container">
 <?php
 
-require_once "inc/db.inc.php";
 
-$stmt = $pdo->query('SELECT e.*, r.name AS roomName, r.phone AS roomPhone FROM employee e LEFT JOIN room r ON e.room = r.room_id ORDER BY e.surname');
 
 
 if ($stmt->rowCount() == 0) {

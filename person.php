@@ -4,7 +4,7 @@ $id = filter_input(INPUT_GET,
     FILTER_VALIDATE_INT,
     ["options" => ["min_range"=> 1]]
 );
-$POMOC = $id;
+
 if ($id === null || $id === false) {
     http_response_code(400);
     $status = "bad_request";
@@ -73,7 +73,6 @@ switch ($status) {
             while($room = $stmt->fetch()){
                 echo("<dd><a href='room.php?roomId={$room->room_id}'>{$room->name}</a></dd>");
             }
-
         }
         echo("</dl>");
         echo("</div>");
