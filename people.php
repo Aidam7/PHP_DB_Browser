@@ -40,6 +40,7 @@ if ($stmt->rowCount() == 0) {
     echo "Záznam neobsahuje žádná data";
 } else {
     echo("<h1>Zaměstnanci</h1>");
+
     echo('<a href="index.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</a>');
     echo "<table class='table table-striped'>";
     echo "<tr>";
