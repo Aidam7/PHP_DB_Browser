@@ -37,7 +37,7 @@ if ($stmt->rowCount() == 0) {
     echo "Záznam neobsahuje žádná data";
 } else {
     echo("<h1>Zaměstnanci</h1>");
-    echo('<a href="index.php"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</button></a>');
+    echo('<a href="index.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</button></a><br><br>');
     echo "<table class='table table-striped'>";
     echo "<tr>";
     echo '<th>Jméno<a href="?poradi=prijmeni_up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><a href="?poradi=prijmeni_down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></th><th>Pozice</th><th>Místnost</th><th>Telefon</th>';
@@ -53,7 +53,12 @@ if ($stmt->rowCount() == 0) {
 //        var_dump($row['name']);
     }
     echo "</table>";
-    echo('<a href="people.php"><button type="button" class="btn btn-primary">Vyčisti řazení</button></a><br>');
+    if($order === null){
+        echo('<a href="people.php"><button type="button" class="btn btn-primary btn-sm">Vyčistit řazení</button></a><br>');
+    }
+    else{
+        echo('<a href="people.php"><button type="button" class="btn btn-danger btn-sm">Vyčistit řazení</button></a><br>');
+    }
 }
 unset($stmt);
 ?>
