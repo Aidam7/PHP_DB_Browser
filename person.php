@@ -57,7 +57,7 @@ switch ($status) {
     default:
         echo("<div class='container'>");
         echo("<h1>{$person -> surname} {$person -> name}</h1>");
-        echo('<a href="people.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam zaměstnanců</button></a><br><br>');
+        echo('<a href="people.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Na seznam zaměstnanců</button></a><br><br>');
         echo("<dl class='dl-horizontal'>");
 
         $capitalizedJob = mb_convert_case($person -> job, MB_CASE_TITLE, 'UTF-8');

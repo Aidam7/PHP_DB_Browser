@@ -37,7 +37,7 @@ if ($stmt->rowCount() == 0) {
     echo "Záznam neobsahuje žádná data";
 } else {
     echo("<h1>Zaměstnanci</h1>");
-    echo('<a href="index.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</button></a><br><br>');
+    echo('<a href="index.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Na hlavní stránku</button></a><br><br>');
     echo "<table class='table table-striped'>";
     echo "<tr>";
     echo '<th>Jméno<a href="?poradi=prijmeni_up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><a href="?poradi=prijmeni_down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></th>

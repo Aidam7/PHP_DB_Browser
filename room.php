@@ -55,7 +55,7 @@ switch ($status) {
     default:
         echo("<div class='container'>");
         echo("<h1>Místnost č. {$room -> no}</h1>");
-        echo('<a href="rooms.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam místností</a>');
+        echo('<a href="rooms.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Na seznam místností</button></a><br><br>');
         echo("<dl class='dl-horizontal'>");
         echo("<dt>Číslo</dt><dd>{$room -> no}</dd><dt>Název</dt><dd>{$room -> name}</dd>");
         if($room -> phone === null){
