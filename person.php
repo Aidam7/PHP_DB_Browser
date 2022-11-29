@@ -37,7 +37,7 @@ if ($id === null || $id === false) {
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u' crossorigin='anonymous'>
     <title><?php
         if($status == "OK"){
-            echo("{$person -> name} {$person -> surname}");
+            echo("{$person -> surname} {$person -> name}");
         }
         else{
             $httpCode = http_response_code();
@@ -56,13 +56,13 @@ switch ($status) {
         break;
     default:
         echo("<div class='container'>");
-        echo("<h1>Zaměstnanec č. {$person -> employee_id}</h1>");
-        echo('<a href="people.php"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam zaměstnanců</a>');
+        echo("<h1>{$person -> surname} {$person -> name}</h1>");
+        echo('<a href="people.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na seznam zaměstnanců</button></a><br><br>');
         echo("<dl class='dl-horizontal'>");
 
         $capitalizedJob = mb_convert_case($person -> job, MB_CASE_TITLE, 'UTF-8');
         $formattedWage = number_format($person -> wage,2);
-        echo("<dt>Číslo</dt><dd>{$person -> employee_id}</dd><dt>Jméno</dt><dd>{$person -> name} {$person -> surname}</dd><dt>Pozice</dt><dd>{$capitalizedJob}</dd><dt>Plat</dt><dd>{$formattedWage}</dd><dt>Místnost</dt><dd><a href='room.php?roomId={$room->room_id}'>{$room->name}</a></dd>");
+        echo("<dt>ID</dt><dd>{$person -> employee_id}</dd><dt>Jméno</dt><dd>{$person -> name}</dd><dt>Příjmení</dt><dd>{$person -> surname}</dd><dt>Pozice</dt><dd>{$capitalizedJob}</dd><dt>Plat</dt><dd>{$formattedWage}</dd><dt>Místnost</dt><dd><a href='room.php?roomId={$room->room_id}'>{$room->name}</a></dd>");
         $stmt = $pdo ->prepare("SELECT room.name, room.room_id FROM `key` klic JOIN room ON klic.room = room.room_id WHERE klic.employee =:employeeId ORDER BY room.name");
         $stmt->execute(['employeeId' => $id]);
         if($stmt ->fetch() === 0){

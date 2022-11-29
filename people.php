@@ -6,7 +6,7 @@ $order = filter_input(INPUT_GET,
 require_once "inc/db.inc.php";
 
 
-$stmtString = 'SELECT e.*, r.name AS roomName, r.phone AS roomPhone FROM employee e  JOIN room r ON e.room = r.room_id';
+$stmtString = 'SELECT e.*, r.name AS roomName, r.phone AS roomPhone, r.room_id FROM employee e  JOIN room r ON e.room = r.room_id';
 switch ($order){
     case "prijmeni_up": $stmtString .= " ORDER BY e.surname"; break;
     case "prijmeni_down": $stmtString .= " ORDER BY e.surname DESC"; break;
@@ -40,7 +40,12 @@ if ($stmt->rowCount() == 0) {
     echo('<a href="index.php"><button type="button" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Zpět na hlavní stránku</button></a><br><br>');
     echo "<table class='table table-striped'>";
     echo "<tr>";
-    echo '<th>Jméno<a href="?poradi=prijmeni_up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><a href="?poradi=prijmeni_down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></th><th>Pozice</th><th>Místnost</th><th>Telefon</th>';
+    echo '<th>Jméno<a href="?poradi=prijmeni_up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><a href="?poradi=prijmeni_down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></th>
+
+<th>Pozice<a href="?poradi=pozice_up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><a href="?poradi=pozice_down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></th>
+
+<th>Místnost<a href="?poradi=mistnost_up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><a href="?poradi=mistnost_down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></th>
+<th>Telefon<a href="?poradi=telefon_up"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span><a href="?poradi=telefon_down"><span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span></th>';
     echo "</tr>";
     while ($row = $stmt->fetch()) {
         echo "<tr>";
@@ -54,10 +59,10 @@ if ($stmt->rowCount() == 0) {
     }
     echo "</table>";
     if($order === null){
-        echo('<a href="people.php"><button type="button" class="btn btn-primary btn-sm">Vyčistit řazení</button></a><br>');
+        echo('<a href="people.php"><button type="button" class="btn btn-primary btn-sm">Zrušit řazení</button></a><br>');
     }
     else{
-        echo('<a href="people.php"><button type="button" class="btn btn-danger btn-sm">Vyčistit řazení</button></a><br>');
+        echo('<a href="people.php"><button type="button" class="btn btn-danger btn-sm">Zrušit řazení</button></a><br>');
     }
 }
 unset($stmt);
